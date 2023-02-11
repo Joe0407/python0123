@@ -41,7 +41,7 @@ table=""" CREATE TABLE VENTA (
 cursor_obj.execute(table)
 
 ##tabla detalle_venta
-cursor_obj.execute("DROP TABLE IF EXISTS INVENTARIO")
+cursor_obj.execute("DROP TABLE IF EXISTS DETALLE_VENTA")
 
 table=""" CREATE TABLE DETALLE_VENTA (
             ID_DETALLE_VENTA INTEGER PRIMARY KEY,
@@ -61,8 +61,8 @@ cursor_obj.execute(' DROP TABLE IF EXISTS TIPO_CAMBIO')
 table = """
         CREATE TABLE TIPO_CAMBIO (
             ID_CAMBIO_DOLAR INTEGER PRIMARY KEY,
-            COMPRA INTEGER,
-            VENTA INTEGER,
+            COMPRA VARCHAR(10),
+            VENTA VARCHAR(10),
             FECHA TIMESTAMP DATE
         ); """
 

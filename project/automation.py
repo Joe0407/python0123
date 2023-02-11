@@ -1,6 +1,15 @@
 import pandas as pd
 import os
 import db
+import requests #importando libreria requests
+
+
+url='https://api.apis.net.pe/v1/tipo-cambio-sunat'
+r = requests.get(url)
+datos = r.json()
+print(datos)
+
+
 message="""
     1)Insertar data:
     2)Actualizar data del dolar
