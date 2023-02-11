@@ -13,55 +13,59 @@ table = """ CREATE TABLE USUARIOS (
             TIPOUSUARIO VARCHAR(25)
         ); """
 cursor_obj.execute(table)
+
+## tabla productos
 cursor_obj.execute("DROP TABLE IF EXISTS PRODUCTOS")
 table = """ CREATE TABLE PRODUCTOS (
-            ID  INTEGER PRIMARY KEY AUTOINCREMENT,
+            ID_PRODUCTO  INTEGER PRIMARY KEY AUTOINCREMENT,
             NAMEPRODUCT VARCHAR(255) NOT NULL,
-            PRICE VARCHAR(20) NOT NULL, 
+            NRO_SERIE VARCHAR(250) NOT NULL,
             CATEGORIA VARCHAR(25) NOT NULL,
             STCOKACTUAL INT,
+            PRICE VARCHAR(20) NOT NULL,
             CREACTION_PRODUCT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             UPDATE_PRODUCT TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ); """
 cursor_obj.execute(table)
+
+## tabla venta
 cursor_obj.execute("DROP TABLE IF EXISTS VENTA")
 
 table=""" CREATE TABLE VENTA (
             ORDERID  INTEGER PRIMARY KEY AUTOINCREMENT,
             PRODUCTID INT, 
-            PRICETOTAL VARCHAR(25) NOT NULL
+            PRICETOTAL VARCHAR(25) NOT NULL,
+            FOREIGN KEY(PRODUCTID) REFERENCES PRODUCTOS(ID_PRODUCTO)
         ); """
 
 cursor_obj.execute(table)
+
+##tabla detalle_venta
 cursor_obj.execute("DROP TABLE IF EXISTS INVENTARIO")
 
-table=""" CREATE TABLE INVENTARIO (
-            IDMOVIMIENTO  INTEGER PRIMARY KEY AUTOINCREMENT,
-            PRODUCTID INT NOT NULL, 
-            CANTIDAD INT NOT NULL,
-            FECHA_MOVIMIENTO TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+table=""" CREATE TABLE DETALLE_VENTA (
+            ID_DETALLE_VENTA INTEGER PRIMARY KEY,
+            VENTAID INTEGER ,
+            PRODUCTID INTEGER,
+            CANTIDAD_PRODUCTO INTEGER,
+            FOREIGN KEY(VENTAID) REFERENCES VENTA(ORDERID),
+            FOREIGN KEY(PRODUCTID) REFERENCES PRODUCTOS(ID_PRODUCTO)
         ); """
 cursor_obj.execute(table)
 
-# comentamos las insercciones ya que solo sera parte de la creacion de tablas
-""" insert =" INSERT INTO USUARIOS(USUARIO,PASSWORD,EMAIL,FULLNAME,SCORE,TIPOUSUARIO) VALUES('admin','admin','admin@datux.com','admin datux',0,'admin')"
+## TABLA TIPO_CAMBIO
 
-conn.execute(insert)
-insert =" INSERT INTO USUARIOS(USUARIO,PASSWORD,EMAIL,FULLNAME,SCORE,TIPOUSUARIO) VALUES('cliente','cliente','email','cliente',0,'cliente')"
-conn.execute(insert)
+cursor_obj.execute(' DROP TABLE IF EXISTS TIPO_CAMBIO')
 
 
-print("Table is Ready")
+table = """
+        CREATE TABLE TIPO_CAMBIO (
+            ID_CAMBIO_DOLAR INTEGER PRIMARY KEY,
+            COMPRA INTEGER,
+            VENTA INTEGER,
+            FECHA TIMESTAMP DATE
+        ); """
 
-print("ingrese valores")
-nameProduct=input('ingrese el nombre del producto')
-price=input('ingrese el PRICE:')
-categria=input('ingrese el CATEGORIA:')
-stock=int(input('ingrese el STCOKACTUAL:'))
-
-insert="INSERT INTO PRODUCTOS(NAMEPRODUCT,PRICE,CATEGORIA,STCOKACTUAL) VALUES(?,?,?,?);"
-data=(nameProduct,price,categria,stock)
-conn.execute(insert,data)
-"""
+cursor_obj.execute(table)
 
 conn.commit()
