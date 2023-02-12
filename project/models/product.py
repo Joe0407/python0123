@@ -7,7 +7,7 @@ class ModelProducto():
         
     def getProducto(self):
         cursor=self.db.getCursor()
-        data=cursor.execute('SELECT FROM PRODUCTOS').fetchall()
+        data=cursor.execute('SELECT * FROM PRODUCTOS').fetchall()
         return data
     ## Insertar
     
