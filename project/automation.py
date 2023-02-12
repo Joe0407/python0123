@@ -2,7 +2,7 @@ import pandas as pd
 import os
 import db
 import requests #importando libreria requests
-import datetime as d # importando libreria fecha
+import matplotlib.pyplot as plt
 
 ## FUNCION PARA INSERTAR LA DATA
 
@@ -49,11 +49,30 @@ def ActualizarData():
         cursor.execute(query,[compra,venta,ID])
         conn.con.commit()
         print ("Data Actualizada")
-
+        
+        
+        
+def GenerarReporte():
+    conn = db.Conection('tienda.db')
+    cursor = conn.getCursor()
+    query = "SELECT COMPRA, VENTA FROM TIPO_CAMBIO "
+    cursor.execute(query)
+       
+    dates = []
+    valores =[]    
+    for row in cursor.fetchall():
+        dates.append(row[0])
+        valores.append(row[1])
+    plt.plot_date(dates,valores)
+    plt.show()
+    
+    
+    
 message="""
     1)Insertar data:
     2)Leer los datos ingresados
     3)Actualizar data del dolar
+    4)Generar Reporte
 """
 print(message)
 a=int(input('ingrese la tarea a realizar: '))
@@ -66,3 +85,8 @@ elif(a==2):
     LeerData()
 elif(a==3):
     ActualizarData()
+elif (a==4):
+        GenerarReporte()
+  
+else:
+    print("No existe esa opcion")
