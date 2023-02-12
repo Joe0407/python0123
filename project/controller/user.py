@@ -10,3 +10,11 @@ def controllerUser():
 def insertUser(data):
     user=md.ModelUser()
     user.insertUser(data)
+    
+def UpdateUser(data):
+    user=md.ModelUser()
+    user.UpdateUser(data)
+    
+def DeleteUser(data):
+    user=md.ModelUser()
+    user.DeleteUser(data)

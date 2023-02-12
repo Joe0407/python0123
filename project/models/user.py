@@ -14,4 +14,24 @@ class ModelUser():
         cursor.execute(inserSentence,data)
         self.db.con.commit()
         print('data insertada')
+        
+    ## actualizar y eliminar
+    
+    #ACTUALIZAR
+    
+    def UpdateUser(self,data):
+        query="UPDATE USUARIOS SET USUARIO=?,PASSWORD=?,EMAIL=?,SCORE=?,FULLNAME=?,TIPOUSUARIO=? WHERE ID=?"
+        cursor=self.db.getCursor()
+        cursor.execute(query,data)
+        self.db.con.commit()
+        print('data actualizada')
+    
+    ##ELIMINAR
+    
+    def DeleteUser(self,data):
+        query="DELETE FROM USUARIOS WHERE ID=?"
+        cursor=self.db.getCursor()
+        cursor.execute(query,data)
+        self.db.con.commit()
+        print('data eliminada')
 
